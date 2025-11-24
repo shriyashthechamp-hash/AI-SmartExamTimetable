@@ -1,0 +1,187 @@
+�---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+		<title>{title} | ApplyMate Dashboard</title>
+	</head>
+	<body>
+		<div class="dashboard-container">
+			<aside class="sidebar glass-panel">
+				<div class="logo">Apply<span class="text-gradient">Mate</span></div>
+				<nav class="sidebar-nav">
+					<a href="/dashboard" class="nav-item active">
+						<span class="icon">📊</span> Overview
+					</a>
+					<a href="/dashboard/jobs" class="nav-item">
+						<span class="icon">🔍</span> Find Jobs
+					</a>
+					<a href="/dashboard/resumes" class="nav-item">
+						<span class="icon">📄</span> Resumes
+					</a>
+					<a href="/dashboard/applications" class="nav-item">
+						<span class="icon">💼</span> Applications
+					</a>
+					<a href="/dashboard/settings" class="nav-item">
+						<span class="icon">⚙️</span> Settings
+					</a>
+				</nav>
+				<div class="user-profile">
+					<div class="avatar">SD</div>
+					<div class="info">
+						<span class="name">Shriyas D.</span>
+						<span class="role">Pro Plan</span>
+					</div>
+				</div>
+			</aside>
+			
+			<main class="main-content">
+				<header class="top-bar glass-panel">
+					<h1 class="page-title">{title}</h1>
+					<div class="actions">
+						<button class="btn btn-primary btn-sm">+ New Application</button>
+					</div>
+				</header>
+				
+				<div class="content-area">
+					<slot />
+				</div>
+			</main>
+		</div>
+	</body>
+</html>
+
+<style>
+	body {
+		background: var(--color-bg-main);
+		color: var(--color-text-primary);
+		overflow: hidden; /* Prevent body scroll, let content scroll */
+	}
+
+	.dashboard-container {
+		display: grid;
+		grid-template-columns: 260px 1fr;
+		height: 100vh;
+	}
+
+	/* Sidebar */
+	.sidebar {
+		display: flex;
+		flex-direction: column;
+		padding: var(--space-md);
+		border-right: var(--border-subtle);
+		border-radius: 0; /* Reset radius for full height */
+		z-index: 10;
+	}
+
+	.logo {
+		font-family: var(--font-display);
+		font-weight: 800;
+		font-size: 1.5rem;
+		margin-bottom: var(--space-xl);
+		padding-left: var(--space-xs);
+	}
+
+	.sidebar-nav {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+		flex: 1;
+	}
+
+	.nav-item {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		padding: 0.75rem 1rem;
+		border-radius: var(--radius-md);
+		color: var(--color-text-secondary);
+		font-weight: 500;
+		transition: all 0.2s;
+	}
+
+	.nav-item:hover, .nav-item.active {
+		background: rgba(59, 130, 246, 0.1);
+		color: var(--color-text-primary);
+	}
+
+	.nav-item .icon {
+		font-size: 1.2rem;
+	}
+
+	.user-profile {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		padding-top: var(--space-md);
+		border-top: var(--border-subtle);
+	}
+
+	.avatar {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: var(--gradient-primary);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: 700;
+		font-size: 0.9rem;
+	}
+
+	.info {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.name {
+		font-weight: 600;
+		font-size: 0.9rem;
+	}
+
+	.role {
+		font-size: 0.75rem;
+		color: var(--color-text-secondary);
+	}
+
+	/* Main Content */
+	.main-content {
+		display: flex;
+		flex-direction: column;
+		height: 100vh;
+		overflow: hidden;
+		position: relative;
+	}
+
+	.top-bar {
+		padding: var(--space-md) var(--space-lg);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: var(--border-subtle);
+		border-radius: 0;
+	}
+
+	.page-title {
+		font-size: 1.5rem;
+	}
+
+	.content-area {
+		flex: 1;
+		overflow-y: auto;
+		padding: var(--space-lg);
+	}
+</style>
+�*cascade08"(6e5e06fffd67f5d7d70ca31b41ed94bb8ae43e352Zfile:///Users/shriyasdeshmukh/Desktop/applymate/frontend/src/layouts/DashboardLayout.astro:8file:///Users/shriyasdeshmukh/Desktop/applymate/frontend

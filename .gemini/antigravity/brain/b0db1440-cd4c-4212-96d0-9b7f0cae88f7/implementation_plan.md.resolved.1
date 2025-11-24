@@ -1,0 +1,24 @@
+# Deployment Readiness Plan
+
+## Goal
+Configure the application for deployment as a single unit where the Node.js/Express backend serves the static Astro frontend.
+
+## Proposed Changes
+
+### 1. Frontend Configuration
+- **API URL**: Update [jobs.astro](file:///Users/shriyasdeshmukh/Desktop/applymate/frontend/src/pages/dashboard/jobs.astro) to use an environment variable `PUBLIC_API_URL` so it works in both Dev (localhost:3001) and Prod (relative path).
+- **Build**: Ensure `npm run build` produces the correct output.
+
+### 2. Backend Configuration
+- **Static Serving**: Update [index.js](file:///Users/shriyasdeshmukh/Desktop/applymate/backend/index.js) to serve the `../frontend/dist` directory.
+- **Catch-all**: Add a fallback route to serve `index.html` (or specific pages) if needed, though standard static serving usually suffices for Astro MPAs.
+
+### 3. Build Automation
+- **Root/Backend Script**: Add a script to [backend/package.json](file:///Users/shriyasdeshmukh/Desktop/applymate/backend/package.json) to build the frontend before starting.
+    - `build`: `cd ../frontend && npm install && npm run build`
+    - `start`: `node index.js`
+
+## Verification
+- Run `npm run build` in backend.
+- Run `npm start` in backend.
+- Access `http://localhost:3001` and verify the Frontend loads and can fetch data from `/api/jobs`.

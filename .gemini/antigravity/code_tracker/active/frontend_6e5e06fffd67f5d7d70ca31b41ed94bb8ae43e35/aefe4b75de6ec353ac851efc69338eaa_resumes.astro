@@ -1,0 +1,321 @@
+�6---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+---
+
+<DashboardLayout title="Resumes">
+	<div class="page-header">
+		<p class="description">Manage your base resumes and generate tailored versions for specific job applications.</p>
+	</div>
+
+	<div class="grid-layout">
+		<!-- Upload Section -->
+		<section class="upload-section glass-panel">
+			<h2>Upload New Resume</h2>
+			<div class="dropzone" id="dropzone">
+				<div class="icon">📂</div>
+				<p><strong>Drag & drop your resume here</strong></p>
+				<p class="sub">Supports PDF, DOCX (Max 5MB)</p>
+				<button class="btn btn-secondary btn-sm">Browse Files</button>
+				<input type="file" id="fileInput" hidden accept=".pdf,.docx" />
+			</div>
+		</section>
+
+		<!-- Base Resumes -->
+		<section class="resumes-list glass-panel">
+			<div class="section-header">
+				<h2>Base Resumes</h2>
+				<span class="badge">2 Files</span>
+			</div>
+			<div class="list">
+				<div class="resume-item">
+					<div class="file-icon">📄</div>
+					<div class="file-info">
+						<span class="name">Shriyas_Frontend_Dev.pdf</span>
+						<span class="meta">Uploaded 2 days ago • 1.2 MB</span>
+					</div>
+					<div class="actions">
+						<button class="btn-icon" title="View">👁️</button>
+						<button class="btn-icon" title="Delete">🗑️</button>
+					</div>
+				</div>
+				<div class="resume-item">
+					<div class="file-icon">📄</div>
+					<div class="file-info">
+						<span class="name">Shriyas_FullStack.pdf</span>
+						<span class="meta">Uploaded 1 week ago • 1.4 MB</span>
+					</div>
+					<div class="actions">
+						<button class="btn-icon" title="View">👁️</button>
+						<button class="btn-icon" title="Delete">🗑️</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Tailored Resumes -->
+		<section class="tailored-list glass-panel full-width">
+			<div class="section-header">
+				<h2>Recently Tailored Resumes</h2>
+				<button class="btn btn-primary btn-sm">✨ Tailor New Resume</button>
+			</div>
+			<div class="table-container">
+				<table>
+					<thead>
+						<tr>
+							<th>Job Title</th>
+							<th>Company</th>
+							<th>Base Resume</th>
+							<th>Match Score</th>
+							<th>Date</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Senior Frontend Engineer</td>
+							<td>Netflix</td>
+							<td>Shriyas_Frontend_Dev.pdf</td>
+							<td><span class="score high">92%</span></td>
+							<td>Today</td>
+							<td><button class="btn-link">Download</button></td>
+						</tr>
+						<tr>
+							<td>Software Engineer II</td>
+							<td>Google</td>
+							<td>Shriyas_FullStack.pdf</td>
+							<td><span class="score medium">85%</span></td>
+							<td>Yesterday</td>
+							<td><button class="btn-link">Download</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
+</DashboardLayout>
+
+<script>
+	// Simple drag and drop interaction
+	const dropzone = document.getElementById('dropzone');
+	const fileInput = document.getElementById('fileInput');
+
+	dropzone?.addEventListener('click', () => fileInput?.click());
+
+	dropzone?.addEventListener('dragover', (e) => {
+		e.preventDefault();
+		dropzone.classList.add('active');
+	});
+
+	dropzone?.addEventListener('dragleave', () => {
+		dropzone.classList.remove('active');
+	});
+
+	dropzone?.addEventListener('drop', (e) => {
+		e.preventDefault();
+		dropzone.classList.remove('active');
+		// Handle file upload logic here
+		alert('File upload simulation: ' + e.dataTransfer?.files[0].name);
+	});
+
+	fileInput?.addEventListener('change', (e) => {
+		// @ts-ignore
+		if (e.target.files.length > 0) {
+			// @ts-ignore
+			alert('File selected: ' + e.target.files[0].name);
+		}
+	});
+</script>
+
+<style>
+	.page-header {
+		margin-bottom: var(--space-md);
+	}
+
+	.description {
+		color: var(--color-text-secondary);
+	}
+
+	.grid-layout {
+		display: grid;
+		grid-template-columns: 1fr 1.5fr;
+		gap: var(--space-md);
+	}
+
+	.full-width {
+		grid-column: 1 / -1;
+	}
+
+	/* Upload Section */
+	.upload-section {
+		padding: var(--space-md);
+		display: flex;
+		flex-direction: column;
+	}
+
+	.upload-section h2 {
+		font-size: 1.1rem;
+		margin-bottom: var(--space-md);
+	}
+
+	.dropzone {
+		flex: 1;
+		border: 2px dashed rgba(148, 163, 184, 0.2);
+		border-radius: var(--radius-md);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: var(--space-lg);
+		cursor: pointer;
+		transition: all 0.2s;
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.dropzone:hover, .dropzone.active {
+		border-color: var(--color-primary);
+		background: rgba(59, 130, 246, 0.05);
+	}
+
+	.dropzone .icon {
+		font-size: 2.5rem;
+		margin-bottom: var(--space-sm);
+		opacity: 0.8;
+	}
+
+	.dropzone p {
+		margin-bottom: var(--space-xs);
+	}
+
+	.dropzone .sub {
+		font-size: 0.8rem;
+		color: var(--color-text-secondary);
+		margin-bottom: var(--space-md);
+	}
+
+	/* Resumes List */
+	.resumes-list {
+		padding: var(--space-md);
+	}
+
+	.section-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: var(--space-md);
+	}
+
+	.section-header h2 {
+		font-size: 1.1rem;
+	}
+
+	.badge {
+		background: rgba(255, 255, 255, 0.1);
+		padding: 0.2rem 0.5rem;
+		border-radius: var(--radius-full);
+		font-size: 0.75rem;
+	}
+
+	.list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
+	}
+
+	.resume-item {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		padding: var(--space-sm);
+		background: rgba(255, 255, 255, 0.03);
+		border-radius: var(--radius-md);
+		border: 1px solid transparent;
+		transition: all 0.2s;
+	}
+
+	.resume-item:hover {
+		border-color: rgba(255, 255, 255, 0.1);
+		background: rgba(255, 255, 255, 0.05);
+	}
+
+	.file-icon {
+		font-size: 1.5rem;
+	}
+
+	.file-info {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.file-info .name {
+		font-weight: 500;
+		font-size: 0.9rem;
+	}
+
+	.file-info .meta {
+		font-size: 0.75rem;
+		color: var(--color-text-secondary);
+	}
+
+	.btn-icon {
+		background: transparent;
+		border: none;
+		color: var(--color-text-secondary);
+		cursor: pointer;
+		padding: 0.25rem;
+		border-radius: var(--radius-sm);
+	}
+
+	.btn-icon:hover {
+		color: var(--color-text-primary);
+		background: rgba(255, 255, 255, 0.1);
+	}
+
+	/* Tailored List */
+	.tailored-list {
+		padding: var(--space-md);
+	}
+
+	.table-container {
+		overflow-x: auto;
+	}
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.9rem;
+	}
+
+	th {
+		text-align: left;
+		padding: var(--space-sm);
+		color: var(--color-text-secondary);
+		font-weight: 500;
+		border-bottom: var(--border-subtle);
+	}
+
+	td {
+		padding: var(--space-sm);
+		border-bottom: var(--border-subtle);
+	}
+
+	tr:last-child td {
+		border-bottom: none;
+	}
+
+	.score {
+		font-weight: 700;
+	}
+	.score.high { color: var(--color-success); }
+	.score.medium { color: var(--color-warning); }
+
+	.btn-link {
+		background: none;
+		border: none;
+		color: var(--color-primary);
+		cursor: pointer;
+		font-size: 0.85rem;
+		text-decoration: underline;
+	}
+</style>
+�6*cascade08"(6e5e06fffd67f5d7d70ca31b41ed94bb8ae43e352Zfile:///Users/shriyasdeshmukh/Desktop/applymate/frontend/src/pages/dashboard/resumes.astro:8file:///Users/shriyasdeshmukh/Desktop/applymate/frontend

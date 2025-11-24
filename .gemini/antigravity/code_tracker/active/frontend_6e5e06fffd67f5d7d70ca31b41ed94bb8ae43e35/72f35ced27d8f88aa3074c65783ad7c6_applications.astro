@@ -1,0 +1,252 @@
+·*---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+---
+
+<DashboardLayout title="Applications">
+	<div class="kanban-board">
+		<!-- Column: Applied -->
+		<div class="column">
+			<div class="column-header">
+				<span class="status-dot applied"></span>
+				<h2>Applied</h2>
+				<span class="count">4</span>
+			</div>
+			<div class="cards">
+				<div class="card glass-panel">
+					<div class="card-header">
+						<div class="logo-placeholder">N</div>
+						<div class="info">
+							<h3>Frontend Engineer</h3>
+							<span class="company">Netflix</span>
+						</div>
+					</div>
+					<div class="card-meta">
+						<span class="date">2d ago</span>
+						<span class="tag">Remote</span>
+					</div>
+				</div>
+				<div class="card glass-panel">
+					<div class="card-header">
+						<div class="logo-placeholder">A</div>
+						<div class="info">
+							<h3>UI Developer</h3>
+							<span class="company">Airbnb</span>
+						</div>
+					</div>
+					<div class="card-meta">
+						<span class="date">3d ago</span>
+						<span class="tag">Hybrid</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Column: Interviewing -->
+		<div class="column">
+			<div class="column-header">
+				<span class="status-dot interviewing"></span>
+				<h2>Interviewing</h2>
+				<span class="count">2</span>
+			</div>
+			<div class="cards">
+				<div class="card glass-panel">
+					<div class="card-header">
+						<div class="logo-placeholder">S</div>
+						<div class="info">
+							<h3>Senior React Dev</h3>
+							<span class="company">Spotify</span>
+						</div>
+					</div>
+					<div class="card-meta">
+						<span class="date">Technical Round</span>
+						<span class="tag urgent">Tomorrow</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Column: Offer -->
+		<div class="column">
+			<div class="column-header">
+				<span class="status-dot offer"></span>
+				<h2>Offer</h2>
+				<span class="count">1</span>
+			</div>
+			<div class="cards">
+				<div class="card glass-panel highlight">
+					<div class="card-header">
+						<div class="logo-placeholder">V</div>
+						<div class="info">
+							<h3>Full Stack Eng</h3>
+							<span class="company">Vercel</span>
+						</div>
+					</div>
+					<div class="card-meta">
+						<span class="date">Offer Received!</span>
+						<span class="tag success">$120k</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Column: Rejected -->
+		<div class="column">
+			<div class="column-header">
+				<span class="status-dot rejected"></span>
+				<h2>Rejected</h2>
+				<span class="count">5</span>
+			</div>
+			<div class="cards">
+				<div class="card glass-panel dimmed">
+					<div class="card-header">
+						<div class="logo-placeholder">M</div>
+						<div class="info">
+							<h3>Software Engineer</h3>
+							<span class="company">Meta</span>
+						</div>
+					</div>
+					<div class="card-meta">
+						<span class="date">1w ago</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</DashboardLayout>
+
+<style>
+	.kanban-board {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: var(--space-md);
+		height: 100%;
+		overflow-x: auto;
+		padding-bottom: var(--space-md);
+	}
+
+	.column {
+		display: flex;
+		flex-direction: column;
+		min-width: 280px;
+	}
+
+	.column-header {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		margin-bottom: var(--space-md);
+		padding: 0 var(--space-xs);
+	}
+
+	.column-header h2 {
+		font-size: 1rem;
+		font-weight: 600;
+		flex: 1;
+	}
+
+	.count {
+		background: rgba(255, 255, 255, 0.1);
+		padding: 0.1rem 0.5rem;
+		border-radius: var(--radius-full);
+		font-size: 0.75rem;
+		color: var(--color-text-secondary);
+	}
+
+	.status-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+	}
+
+	.status-dot.applied { background: var(--color-text-accent); }
+	.status-dot.interviewing { background: var(--color-warning); }
+	.status-dot.offer { background: var(--color-success); }
+	.status-dot.rejected { background: var(--color-error); }
+
+	.cards {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
+		flex: 1;
+		overflow-y: auto;
+		padding-right: var(--space-xs); /* Space for scrollbar */
+	}
+
+	.card {
+		padding: var(--space-md);
+		cursor: grab;
+		transition: transform 0.2s, box-shadow 0.2s;
+	}
+
+	.card:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-md);
+		border-color: rgba(255, 255, 255, 0.1);
+	}
+
+	.card:active {
+		cursor: grabbing;
+	}
+
+	.card.highlight {
+		border-color: var(--color-success);
+		background: rgba(16, 185, 129, 0.05);
+	}
+
+	.card.dimmed {
+		opacity: 0.6;
+	}
+
+	.card-header {
+		display: flex;
+		gap: var(--space-sm);
+		margin-bottom: var(--space-sm);
+	}
+
+	.logo-placeholder {
+		width: 32px;
+		height: 32px;
+		background: rgba(255, 255, 255, 0.1);
+		border-radius: var(--radius-sm);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: 700;
+		font-size: 0.9rem;
+	}
+
+	.info h3 {
+		font-size: 0.95rem;
+		margin-bottom: 0.1rem;
+	}
+
+	.info .company {
+		font-size: 0.8rem;
+		color: var(--color-text-secondary);
+	}
+
+	.card-meta {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 0.75rem;
+		color: var(--color-text-secondary);
+	}
+
+	.tag {
+		background: rgba(255, 255, 255, 0.05);
+		padding: 0.1rem 0.4rem;
+		border-radius: var(--radius-sm);
+	}
+
+	.tag.urgent {
+		color: var(--color-warning);
+		background: rgba(245, 158, 11, 0.1);
+	}
+
+	.tag.success {
+		color: var(--color-success);
+		background: rgba(16, 185, 129, 0.1);
+	}
+</style>
+·**cascade08"(6e5e06fffd67f5d7d70ca31b41ed94bb8ae43e352_file:///Users/shriyasdeshmukh/Desktop/applymate/frontend/src/pages/dashboard/applications.astro:8file:///Users/shriyasdeshmukh/Desktop/applymate/frontend

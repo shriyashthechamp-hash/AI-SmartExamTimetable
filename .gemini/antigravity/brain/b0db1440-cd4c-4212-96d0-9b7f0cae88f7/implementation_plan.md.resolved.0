@@ -1,0 +1,40 @@
+# ApplyMate Implementation Plan
+
+## Goal Description
+Build an AI-powered career assistant "ApplyMate" based on the provided readme. The goal is to create a premium-looking web application with a Dashboard, Job Matching, and Resume features.
+
+## User Review Required
+- **Architecture**: Confirming the use of Astro for Frontend and Node/Express for Backend as per readme.
+- **Database**: Using SQLite for local development ease, can switch to MySQL later.
+- **Styling**: Using Vanilla CSS with modern design principles (Glassmorphism, gradients) as per system guidelines.
+
+## Proposed Changes
+
+### Project Structure
+- `frontend/`: Astro application
+- `backend/`: Node.js Express application
+
+### Frontend (Astro)
+- **Setup**: Initialize with `npm create astro@latest`.
+- **Styling**: `src/styles/global.css` with CSS variables for a premium theme.
+- **Pages**:
+    - `index.astro`: Landing page with "Hero" section and feature highlights.
+    - `dashboard/index.astro`: Main user dashboard.
+    - `jobs/index.astro`: Job search/matching view.
+
+### Backend (Node/Express)
+- **Setup**: `npm init` and install `express`, `prisma`, `cors`, `dotenv`.
+- **API**:
+    - `/api/jobs`: Get matched jobs (mocked initially).
+    - `/api/user`: User profile endpoints.
+
+## Verification Plan
+
+### Automated Tests
+- Run `npm run dev` in frontend and backend.
+- Verify pages load without errors.
+
+### Manual Verification
+- Check Landing Page aesthetics.
+- Verify Navigation between Landing and Dashboard.
+- Check API connectivity (Dashboard fetching data from Backend).
