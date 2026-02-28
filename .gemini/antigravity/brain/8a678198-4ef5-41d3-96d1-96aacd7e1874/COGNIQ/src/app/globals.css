@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cogniq-bg: #0B0F1A;
+  --color-cogniq-panel: #111827;
+  --color-cogniq-primary: #3b82f6;
+  --color-cogniq-accent: #8b5cf6;
+  --color-cogniq-cyan: #06b6d4;
+  --color-cogniq-success: #10B981;
+  --color-cogniq-warning: #F59E0B;
+  --color-cogniq-danger: #EF4444;
+
+  --color-background: var(--color-cogniq-bg);
+  --color-foreground: #f8fafc;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: inherit;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-cogniq-panel/60 backdrop-blur-md border border-white/5 shadow-inner rounded-xl;
+  }
+}
