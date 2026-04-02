@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Exam Scheduler — AI-Powered Timetable Generation</title>
+  <meta name="description" content="AI-powered exam timetable generation and validation. Create conflict-free schedules with intelligent room allocation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- ═══════════════════ HEADER ═══════════════════ -->
+    <header class="header" id="app-header">
+      <div class="header-left">
+        <div class="header-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+            <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="header-title">Smart Exam Scheduler</h1>
+          <p class="header-subtitle">AI-powered timetable generation &amp; validation</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="status-badge status-ready" id="app-status-badge">
+          <span class="status-dot"></span>
+          Ready
+        </span>
+      </div>
+    </header>
+
+    <!-- ═══════════════════ MAIN CONTENT ═══════════════════ -->
+    <main class="main">
+      <div class="grid-layout">
+        <!-- ─── LEFT COLUMN ─── -->
+        <div class="left-column">
+          <!-- Input Card -->
+          <div class="card" id="input-card">
+            <div class="card-header">
+              <h2 class="card-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+                Add Exam Data
+              </h2>
+            </div>
+            <form class="input-form" id="exam-form">
+              <div class="form-group">
+                <label class="form-label" for="course-name">Course Name</label>
+                <input type="text" class="form-input" id="course-name" placeholder="e.g. Data Structures" required />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="room-id">Room ID</label>
+                  <input type="text" class="form-input" id="room-id" placeholder="e.g. A-101" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="room-capacity">Room Capacity</label>
+                  <input type="number" class="form-input" id="room-capacity" placeholder="e.g. 60" min="1" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="time-slot">Time Slot</label>
+                <div class="select-wrapper">
+                  <select class="form-select" id="time-slot" required>
+                    <option value="" disabled selected>Select a time slot</option>
+                    <option value="09:00 - 10:30">09:00 – 10:30 AM</option>
+                    <option value="11:00 - 12:30">11:00 – 12:30 PM</option>
+                    <option value="13:00 - 14:30">01:00 – 02:30 PM</option>
+                    <option value="15:00 - 16:30">03:00 – 04:30 PM</option>
+                    <option value="17:00 - 18:30">05:00 – 06:30 PM</option>
+                  </select>
+                  <svg class="select-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary" id="add-entry-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+                Add Entry
+              </button>
+            </form>
+            <!-- Entries count -->
+            <div class="entries-count" id="entries-count">
+              <span id="entry-count-number">0</span> entries added
+            </div>
+          </div>
+
+          <!-- Generate Section -->
+          <div class="card generate-card" id="generate-card">
+            <button class="btn btn-generate" id="generate-btn" disabled>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+              Generate Schedule
+            </button>
+            <p class="helper-text">Creates a timetable using AI optimization</p>
+          </div>
+        </div>
+
+        <!-- ─── RIGHT COLUMN ─── -->
+        <div class="right-column">
+          <!-- Schedule Table Card -->
+          <div class="card table-card" id="table-card">
+            <div class="card-header">
+              <h2 class="card-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                  <line x1="3" y1="9" x2="21" y2="9"/>
+                  <line x1="3" y1="15" x2="21" y2="15"/>
+                  <line x1="9" y1="3" x2="9" y2="21"/>
+                </svg>
+                Generated Timetable
+              </h2>
+              <span class="table-count" id="table-count">0 items</span>
+            </div>
+            <div class="table-wrapper" id="table-wrapper">
+              <div class="table-empty" id="table-empty">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.3">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <p>No schedule generated yet</p>
+                <span>Add exam data and click "Generate Schedule"</span>
+              </div>
+              <table class="schedule-table" id="schedule-table" style="display: none;">
+                <thead>
+                  <tr>
+                    <th>Course</th>
+                    <th>Room</th>
+                    <th>Time Slot</th>
+                  </tr>
+                </thead>
+                <tbody id="schedule-tbody">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════ VALIDATION SECTION ═══════════════════ -->
+      <section class="validation-section" id="validation-section" style="display: none;">
+        <h2 class="section-title">Validation Results</h2>
+        <div class="metrics-grid">
+          <!-- Conflict Count -->
+          <div class="metric-card" id="metric-conflicts">
+            <div class="metric-icon-wrap metric-icon-green">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="15" y1="9" x2="9" y2="15"/>
+                <line x1="9" y1="9" x2="15" y2="15"/>
+              </svg>
+            </div>
+            <div class="metric-value" id="conflict-count">0</div>
+            <div class="metric-label">Conflict Count</div>
+            <div class="metric-indicator good" id="conflict-indicator">
+              <span class="indicator-dot"></span>
+              No issues
+            </div>
+          </div>
+
+          <!-- Room Violations -->
+          <div class="metric-card" id="metric-rooms">
+            <div class="metric-icon-wrap metric-icon-green">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </div>
+            <div class="metric-value" id="room-violations">0</div>
+            <div class="metric-label">Room Violations</div>
+            <div class="metric-indicator good" id="room-indicator">
+              <span class="indicator-dot"></span>
+              No issues
+            </div>
+          </div>
+
+          <!-- Back-to-Back Exams -->
+          <div class="metric-card" id="metric-backtoback">
+            <div class="metric-icon-wrap metric-icon-green">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="metric-value" id="backtoback-count">0</div>
+            <div class="metric-label">Back-to-Back Exams</div>
+            <div class="metric-indicator good" id="backtoback-indicator">
+              <span class="indicator-dot"></span>
+              No issues
+            </div>
+          </div>
+        </div>
+
+        <!-- Overall Status -->
+        <div class="overall-status" id="overall-status">
+          <div class="overall-badge good" id="overall-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span id="overall-text">Schedule Valid</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
